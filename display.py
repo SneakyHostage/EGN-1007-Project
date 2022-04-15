@@ -21,12 +21,12 @@ else:
     project_font = "font/Open_Sans/OpenSans-SemiBold.ttf"
 
 
-font8 = ImageFont.truetype(/home/pi/EGN-1007-Project/font/Inconsolata/static/Inconsolata-SemiBold.ttf, 8)
-font12 = ImageFont.truetype(/home/pi/EGN-1007-Project/font/Inconsolata/static/Inconsolata-SemiBold.ttf, 12)
-font14 = ImageFont.truetype(/home/pi/EGN-1007-Project/font/Inconsolata/static/Inconsolata-SemiBold.ttf, 14)
-font16 = ImageFont.truetype(/home/pi/EGN-1007-Project/font/Inconsolata/static/Inconsolata-SemiBold.ttf, 16)
-font24 = ImageFont.truetype(/home/pi/EGN-1007-Project/font/Inconsolata/static/Inconsolata-SemiBold.ttf, 24)
-font48 = ImageFont.truetype(/home/pi/EGN-1007-Project/font/Inconsolata/static/Inconsolata-SemiBold.ttf, 48)
+font8 = ImageFont.truetype(/home/pi/EGS-1006-Project/font/Inconsolata/static/Inconsolata-SemiBold.ttf, 8)
+font12 = ImageFont.truetype(/home/pi/EGS-1006-Project/font/Inconsolata/static/Inconsolata-SemiBold.ttf, 12)
+font14 = ImageFont.truetype(/home/pi/EGS-1006-Project/font/Inconsolata/static/Inconsolata-SemiBold.ttf, 14)
+font16 = ImageFont.truetype(/home/pi/EGS-1006-Project/font/Inconsolata/static/Inconsolata-SemiBold.ttf, 16)
+font24 = ImageFont.truetype(/home/pi/EGS-1006-Project/font/Inconsolata/static/Inconsolata-SemiBold.ttf, 24)
+font48 = ImageFont.truetype(/home/pi/EGS-1006-Project/font/Inconsolata/static/Inconsolata-SemiBold.ttf, 48)
 
 
 class Display:
