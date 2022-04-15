@@ -5,10 +5,13 @@ from news import *
 from display import *
 import json
 
-lat = "47.2108023"
-lon = "-1.5596322"
-api_key_weather = ""
-api_key_news = ""
+use_unicode=True
+charset="utf8"
+
+lat = "28.31830"
+lon = "-80.73245"
+api_key_weather = "8a918a960300d863d0a9db2bf46ec9ac"
+api_key_news = "07e65f1b311c405aaefc45c02c0e9a8d"
 debug = 0
 if debug ==0:
     import epd7in5b_V2
@@ -32,7 +35,7 @@ def main():
     display.draw_black.line((5, 350, 795, 350), fill=0, width=1)  # HORIZONTAL SEPARATION
 
     # UPDATED AT
-    display.draw_black.text((10, 8), "Mis à jour le " + weather.current_time(), fill=0, font=font8)
+    display.draw_black.text((10, 8), "Updated " + weather.current_time(), fill=0, font=font8)
 
     ###################################################################################################################
     # CURRENT WEATHER
@@ -40,7 +43,7 @@ def main():
                       weather.weather_description(weather.current_weather())[0])  # CURRENT WEATHER ICON
     display.draw_black.text((120, 15), weather.current_temp(), fill=0, font=font48)  # CURRENT TEMP
     display.draw_black.text((230, 15), weather.current_hum(), fill=0, font=font48)  # CURRENT HUM
-    display.draw_black.text((245, 65), "Humidité", fill=0, font=font12)  # LABEL "HUMIDITY"
+    display.draw_black.text((245, 65), "Humidity", fill=0, font=font12)  # LABEL "HUMIDITY"
     display.draw_black.text((120, 75), weather.current_wind()[0] + " " + weather.current_wind()[1], fill=0, font=font24)
 
     display.draw_icon(120, 105, "b", 35, 35, "sunrise")  # SUNRISE ICON
@@ -54,7 +57,7 @@ def main():
         data_rain = weather.rain_next_hour()
 
         # FRAME
-        display.draw_black.text((20, 150), "Pluie dans l'heure - " + time.strftime("%H:%M", time.localtime()), fill=0,
+        display.draw_black.text((20, 150), "Rain Within the Hour - " + time.strftime("%H:%M", time.localtime()), fill=0,
                                 font=font16)  # NEXT HOUR RAIN LABEL
         display.draw_black.rectangle((20, 175, 320, 195), fill=255, outline=0, width=1)  # Red rectangle = rain
 
@@ -105,7 +108,7 @@ def main():
     display.draw_black.text((465, 65), weather.daily_forecast()["+24h"]["max"], fill=0, font=font14)
     display.draw_black.text((498, 65), "max", fill=0, font=font14)  # +24H MAX TEMPERATURE
     display.draw_black.text((465, 80), weather.daily_forecast()["+24h"]["pop"], fill=0, font=font14)
-    display.draw_black.text((498, 80), "pluie", fill=0, font=font14)  # +24H RAIN PROBABILITY
+    display.draw_black.text((498, 80), "rain", fill=0, font=font14)  # +24H RAIN PROBABILITY
 
     # +48h
     display.draw_black.text((360, 105), weather.daily_forecast()["+48h"]["date"], fill=0, font=font16)  # +48H DAY
@@ -116,7 +119,7 @@ def main():
     display.draw_black.text((465, 140), weather.daily_forecast()["+48h"]["max"], fill=0, font=font14)
     display.draw_black.text((498, 140), "max", fill=0, font=font14)  # +48H MAX TEMPERATURE
     display.draw_black.text((465, 155), weather.daily_forecast()["+48h"]["pop"], fill=0, font=font14)
-    display.draw_black.text((498, 155), "pluie", fill=0, font=font14)  # +48H RAIN PROBABILITY
+    display.draw_black.text((498, 155), "rain", fill=0, font=font14)  # +48H RAIN PROBABILITY
 
     # +72h
     display.draw_black.text((360, 180), weather.daily_forecast()["+72h"]["date"], fill=0, font=font16)  # +72H DAY
@@ -127,7 +130,7 @@ def main():
     display.draw_black.text((465, 215), weather.daily_forecast()["+72h"]["max"], fill=0, font=font14)
     display.draw_black.text((498, 215), "max", fill=0, font=font14)  # +72H MAX TEMPERATURE
     display.draw_black.text((465, 230), weather.daily_forecast()["+72h"]["pop"], fill=0, font=font14)
-    display.draw_black.text((498, 230), "pluie", fill=0, font=font14)  # +72H RAIN PROBABILITY
+    display.draw_black.text((498, 230), "rain", fill=0, font=font14)  # +72H RAIN PROBABILITY
 
     # +96h
     display.draw_black.text((360, 255), weather.daily_forecast()["+96h"]["date"], fill=0, font=font16)  # +96H DAY
@@ -138,7 +141,7 @@ def main():
     display.draw_black.text((465, 290), weather.daily_forecast()["+96h"]["max"], fill=0, font=font14)
     display.draw_black.text((498, 290), "max", fill=0, font=font14)  # +96H MAX TEMPERATURE
     display.draw_black.text((465, 305), weather.daily_forecast()["+96h"]["pop"], fill=0, font=font14)
-    display.draw_black.text((498, 305), "pluie", fill=0, font=font14)  # +96H RAIN PROBABILITY
+    display.draw_black.text((498, 305), "rain", fill=0, font=font14)  # +96H RAIN PROBABILITY
 
     ###################################################################################################################
     # GRAPHS
