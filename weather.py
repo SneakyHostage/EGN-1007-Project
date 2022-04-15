@@ -7,9 +7,9 @@ import locale
 locale.setlocale(locale.LC_TIME, '')
 
 
-# lat = "48.8511048"
-# lon = "2.3915906"
-# api_key = "696a01e644791c546061076bc92e4cb4"
+# lat = "28.31830"
+# lon = "-80.73245"
+# api_key = "8a918a960300d863d0a9db2bf46ec9ac"
 
 class Weather:
     def __init__(self, latitude, longitude, api_id):
@@ -18,22 +18,22 @@ class Weather:
         self.api_key = api_id
         self.prevision = [0, [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]]
         self.data = requests.get(
-            f"https://api.openweathermap.org/data/2.5/onecall?lat={self.latitude}&lon={self.longitude}&lang=fr&appid={self.api_key}").json()
+            f"https://api.openweathermap.org/data/2.5/onecall?lat={self.latitude}&lon={self.longitude}&units=imperial&lang=en&appid={self.api_key}").json()
         self.prevision[0] = self.data["daily"][0]["dt"]
         self.prevision[1][6] = [self.data["daily"][0]["pressure"],
-                                round(self.data["daily"][0]["temp"]["day"] - 273.15, 0)]
+                                round(self.data["daily"][0]["temp"]["day"], 0)]
         pass
 
     def update(self):
         self.data = requests.get(
-            f"https://api.openweathermap.org/data/2.5/onecall?lat={self.latitude}&lon={self.longitude}&lang=fr&appid={self.api_key}").json()
+            f"https://api.openweathermap.org/data/2.5/onecall?lat={self.latitude}&lon={self.longitude}&units=imperial&lang=en&appid={self.api_key}").json()
         return self.data
 
     def current_time(self):
         return time.strftime("%d/%m/%Y %H:%M", time.localtime(self.data["current"]["dt"]))
 
     def current_temp(self):
-        return "{:.0f}".format(self.data["current"]["temp"] - 273.15) + "°C"
+        return "{:.0f}".format(self.data["current"]["temp"]) + "°F"
 
     def current_hum(self):
         return "{:.0f}".format(self.data["current"]["humidity"]) + "%"
@@ -67,7 +67,7 @@ class Weather:
             direction = "NO"
         else:
             direction = "N/A"
-        return "{:.0f}".format(self.data["current"]["wind_speed"] * 3.6) + "km/h", direction
+        return "{:.0f}".format(self.data["current"]["wind_speed"]) + "mi/h", direction
 
     def current_weather(self):
         description = self.data["current"]["weather"][0]["id"]
@@ -87,15 +87,15 @@ class Weather:
         hourly = {"+3h": {"temp": "", "pop": "", "id": ""}, "+6h": {"temp": "", "pop": "", "id": ""},
                   "+12h": {"temp": "", "pop": "", "id": ""}}
         # Forecast +3h
-        hourly["+3h"]["temp"] = "{:.0f}".format(self.data["hourly"][3]["temp"] - 273.15) + "°C"
+        hourly["+3h"]["temp"] = "{:.0f}".format(self.data["hourly"][3]["temp"]) + "°F"
         hourly["+3h"]["pop"] = "{:.0f}".format(self.data["hourly"][3]["pop"] * 100) + "%"
         hourly["+3h"]["id"] = self.data["hourly"][3]["weather"][0]["id"]
         # Forecast +3h
-        hourly["+6h"]["temp"] = "{:.0f}".format(self.data["hourly"][6]["temp"] - 273.15) + "°C"
+        hourly["+6h"]["temp"] = "{:.0f}".format(self.data["hourly"][6]["temp"]) + "°F"
         hourly["+6h"]["pop"] = "{:.0f}".format(self.data["hourly"][6]["pop"] * 100) + "%"
         hourly["+6h"]["id"] = self.data["hourly"][6]["weather"][0]["id"]
         # Forecast +3h
-        hourly["+12h"]["temp"] = "{:.0f}".format(self.data["hourly"][12]["temp"] - 273.15) + "°C"
+        hourly["+12h"]["temp"] = "{:.0f}".format(self.data["hourly"][12]["temp"]) + "°F"
         hourly["+12h"]["pop"] = "{:.0f}".format(self.data["hourly"][12]["pop"] * 100) + "%"
         hourly["+12h"]["id"] = self.data["hourly"][12]["weather"][0]["id"]
 
@@ -109,8 +109,8 @@ class Weather:
         i = 1
         for key in daily.keys():
             daily[key]["date"] = time.strftime("%A", time.localtime(self.data["daily"][i]["dt"]))
-            daily[key]["min"] = "{:.0f}".format(self.data["daily"][i]["temp"]["min"] - 273.15) + "°C"
-            daily[key]["max"] = "{:.0f}".format(self.data["daily"][i]["temp"]["max"] - 273.15) + "°C"
+            daily[key]["min"] = "{:.0f}".format(self.data["daily"][i]["temp"]["min"]) + "°F"
+            daily[key]["max"] = "{:.0f}".format(self.data["daily"][i]["temp"]["max"]) + "°F"
             daily[key]["pop"] = "{:.0f}".format(self.data["daily"][i]["pop"] * 100) + "%"
             daily[key]["id"] = self.data["daily"][i]["weather"][0]["id"]
             i += 1
@@ -122,40 +122,40 @@ class Weather:
             self.prevision[0] = self.data["daily"][0]["dt"]
             self.prevision = [self.prevision[0], self.prevision[1][1:]]
             self.prevision[1].append(
-                [self.data["daily"][0]["pressure"], round(self.data["daily"][0]["temp"]["day"] - 273.15, 0)])
+                [self.data["daily"][0]["pressure"], round(self.data["daily"][0]["temp"]["day"], 0)])
 
     def weather_description(self, id):
         icon = "sun"
-        weather_detail = "Beau temps"
+        weather_detail = "Sunny"
         if id // 100 != 8:
             id = id // 100
             if id == 2:
                 icon = "thunder"
-                weather_detail = "Orage"
+                weather_detail = "Thunder"
             elif id == 3:
                 icon = "drizzle"
-                weather_detail = "Bruine"
+                weather_detail = "Drizzle"
             elif id == 5:
                 icon = "rain"
-                weather_detail = "Pluie"
+                weather_detail = "Rain"
             elif id == 6:
                 icon = "snow"
-                weather_detail = "Neige"
+                weather_detail = "Snow"
             elif id == 7:
                 icon = "atm"
-                weather_detail = "Brouillard"
+                weather_detail = "Fog"
             else:
-                weather_detail = "Erreur"
+                weather_detail = "Error"
         else:
             if id == 801:
                 icon = "25_clouds"
-                weather_detail = "Peu nuageux"
+                weather_detail = "Partly Cloudy"
             elif id == 802:
                 icon = "50_clouds"
-                weather_detail = "Nuageux"
+                weather_detail = "Cloudy"
             elif id == 803 or id == 804:
                 icon = "100_clouds"
-                weather_detail = "Couvert"
+                weather_detail = "Overcast"
 
         return icon, weather_detail
 
@@ -175,7 +175,7 @@ class Pollution:
 
     def update(self, lattitude, longitude, api_id):
         self.data = requests.get(
-            f"http://api.openweathermap.org/data/2.5/air_pollution?lat={lattitude}&lon={longitude}&appid={api_id}").json()
+            f"http://api.openweathermap.org/data/2.5/air_pollution?lat={lattitude}&lon={longitude}&units=imperial&lang=en&appid={api_id}").json()
         return self.data
 
     def co(self):
